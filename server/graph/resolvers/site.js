@@ -18,6 +18,7 @@ module.exports = {
         company: WIKI.config.company,
         contentLicense: WIKI.config.contentLicense,
         logoUrl: WIKI.config.logoUrl,
+        pageExtensions: WIKI.config.pageExtensions.join(', '),
         ...WIKI.config.seo,
         ...WIKI.config.features,
         ...WIKI.config.security,
@@ -60,6 +61,10 @@ module.exports = {
 
         if (args.hasOwnProperty('logoUrl')) {
           WIKI.config.logoUrl = _.trim(args.logoUrl)
+        }
+
+        if (args.hasOwnProperty('pageExtensions')) {
+          WIKI.config.pageExtensions = _.trim(args.pageExtensions).split(',').map(p => p.trim().toLowerCase()).filter(p => p !== '')
         }
 
         WIKI.config.seo = {
@@ -105,7 +110,7 @@ module.exports = {
           forceDownload: _.get(args, 'uploadForceDownload', WIKI.config.uploads.forceDownload)
         }
 
-        await WIKI.configSvc.saveToDb(['host', 'title', 'company', 'contentLicense', 'seo', 'logoUrl', 'auth', 'features', 'security', 'uploads'])
+        await WIKI.configSvc.saveToDb(['host', 'title', 'company', 'contentLicense', 'seo', 'logoUrl', 'pageExtensions', 'auth', 'features', 'security', 'uploads'])
 
         if (WIKI.config.security.securityTrustProxy) {
           WIKI.app.enable('trust proxy')
