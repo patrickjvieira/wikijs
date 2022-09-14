@@ -88,6 +88,7 @@
           v-btn(
             v-if='!hideSearch && $vuetify.breakpoint.smAndDown'
             @click='searchToggle'
+            aria-label='Procurar'
             icon
             )
             v-icon(color='grey') mdi-magnify
